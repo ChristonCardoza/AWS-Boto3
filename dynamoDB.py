@@ -55,37 +55,39 @@ def Delete_Table(dynamo,tbName):
     return(response)
 
 def Put_Item(dynamo,tbName):
-    Designation = ['Software Engineer','Software Quality Engineer', 'Security Analyst']
-    Name = ['Christon', 'Wilfred', 'Rohan']
-    SerName = ['Cardoza', 'Fernendes','D\'Souza']
-    response = dynamo.put_item(
-
-        TableName= tbName,
-        Item={
-            'Designation':{'S': random.choice(Designation)} ,
-            'Name':{'S':random.choice(Name)},
-            'SerName':{'S':random.choice(SerName)}
-
-
-        }
-    )
+    for repeat in range(10):
+        Designation = ['Software Engineer','Software Quality Engineer', 'Security Analyst']
+        Name = ['Christon', 'Wilfred', 'Rohan']
+        SerName = ['Cardoza', 'Fernendes','D\'Souza']
+        response = dynamo.put_item(
+    
+            TableName= tbName,
+            Item={
+                'Designation':{'S': random.choice(Designation)} ,
+                'Name':{'S':random.choice(Name)},
+                'SerName':{'S':random.choice(SerName)}
+    
+    
+            }
+        )
     print(response)
     return(response)
 
 def Get_Item(dynamo,tbName):
-    response = client.get_item(
+    response = dynamo.get_item(
 
         TableName = tbName,
 
         Key={
+            'Designation': {
+                'S': 'Software Engineer',
+            },
             'Name': {
-                'S': 'Acme Band',
-            },
-            'SongTitle': {
-                'S': 'Happy Day',
-            },
+                'S': 'Christon',
+            }
         },
 
     )
 
+    print(response['Item'])
     print(response)
